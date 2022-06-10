@@ -235,8 +235,8 @@ sup {
 }
 
 a {
-  color: #0d6efd;
-  text-decoration: underline;
+  color: black;
+  text-decoration: none;
 }
 a:hover {
   color: #0a58ca;
@@ -11285,4 +11285,25 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
+}
+/* Css for article_view */
+#article-viewer {
+  text-align: center;
+  margin: 2%;
+}
+
+#article-content {
+  text-align: left;
+}
+
+.article-break {
+  border: 1px;
+}
+
+#article-title {
+  margin-bottom: 30px;
+}
+#article-image {
+  padding: 0;
+  border: 5px solid black;
 }

@@ -2,14 +2,18 @@
 
 {% block content %}
 	<div id="article-viewer">
-		<h2 id="article-title" style="text-align: center;">{{ article.title }}</h2>
-		<p id="article-authors">by {{ article.authors }}</p>
-		<p>published on {{ article.published_date }}, archived on {{ article.archive_date }}</p>
+		<a href="{{ article.orig_article_link }}"><h2 id="article-title">{{ article.title }}</h2></a>
+		{% if article.author %}
+			<p id="article-authors">by {{ article.authors }}</p>
+		{% endif %}
+		<img src="{{ article.image_url }}" alt="" id="article-image">
 		<p id="article-source">source {{ article.source }}</p>
-		<hr>
+		<hr class="article-break">
 		<p id="article-summary">{{ article.summary }}</p>
-		<hr>
+		<hr class="article-break">
 		<p id="article-content">{{ article.content }}</p>
+		<hr class="article-break">
+		<p>published on {{ article.published_date }}, archived on {{ article.archive_date }}</p>
 		
 		
 
