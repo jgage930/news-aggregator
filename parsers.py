@@ -78,13 +78,16 @@ class CnnParser:
 			'/videos/',
 			'lendingtree.com'
 		]
+
+
 		bad_keyword_re = re.compile("|".join(bad_url_keywords))
+		cnn_re = re.compile("cnn.com")
 
 		data = []
 		for entry in self.entries:
 			if 'id' not in entry:
 				continue
-			if not bad_keyword_re.search(entry['id']):
+			if not bad_keyword_re.search(entry['id']) and cnn_re.search(entry['id']):
 				dict = {
 					'title': self.getTitle(entry),
 					'summary': self.getSummary(entry),
