@@ -66,9 +66,14 @@ class CnnParser:
 
 	# for every article get the required data and return a list of dicts
 	def parse(self):
+		# a set of all the bad key words we want to filter out
+		bad_url_keywords = {
+			'podcast',
+			'fool.com'
+		}
 		data = []
 		for entry in self.entries:
-			if 'podcast' not in entry['id']:
+			if entry['id'] not in bad_url_keywords:
 				dict = {
 					'title': self.getTitle(entry),
 					'summary': self.getSummary(entry),
