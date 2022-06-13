@@ -2,6 +2,7 @@ import feedparser as fp
 import requests
 from bs4 import BeautifulSoup as bs
 from datetime import datetime
+import re
 
 class CnnParser:
 
@@ -43,7 +44,7 @@ class CnnParser:
 		for tag in tags:
 			content.append(tag.text)
 
-		return '/n'.join(content)
+		return '\n'.join(content)
 
 	def getPublishedDate(self, entry):
 		if 'published' in entry:
@@ -71,14 +72,19 @@ class CnnParser:
 	# for every article get the required data and return a list of dicts
 	def parse(self):
 		# a set of all the bad key words we want to filter out
-		bad_url_keywords = {
-			'/podcast/',
+		bad_url_keywords = [
+			'/podcasts/',
 			'fool.com',
-			'/videos/'
-		}
+			'/videos/',
+			'lendingtree.com'
+		]
+		bad_keyword_re = re.compile("|".join(bad_url_keywords))
+
 		data = []
 		for entry in self.entries:
-			if entry['id'] not in bad_url_keywords:
+			if 'id' not in entry:
+				continue
+			if not bad_keyword_re.search(entry['id']):
 				dict = {
 					'title': self.getTitle(entry),
 					'summary': self.getSummary(entry),
