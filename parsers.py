@@ -28,18 +28,22 @@ class CnnParser:
 
 	def getContent(self, entry):
 		data = requests.get(self.getOrigArticleUrl(entry))
-
 		soup = bs(data.text, 'html.parser')
-		p_tags = soup.find_all('div', class_="zn-body__paragraph")
-		
-		content = [tag.text for tag in p_tags]
 
-		classes_ = [
-			'sc-bdVaJa post-content-rendered render-stellar-contentstyles__Content-sc-9v7nwy-0 daEDKg',
-			'pg-special-article__wrapper',
-
+		# find all tags in the tag list
+		tags = [
+			'p',
+			'main',
+			'section',
 		]
-		return '\n'.join(content)
+
+		tags = soup.find_all(tags)
+
+		content = []
+		for tag in tags:
+			content.append(tag.text)
+
+		return '/n'.join(content)
 
 	def getPublishedDate(self, entry):
 		if 'published' in entry:
@@ -68,8 +72,9 @@ class CnnParser:
 	def parse(self):
 		# a set of all the bad key words we want to filter out
 		bad_url_keywords = {
-			'podcast',
-			'fool.com'
+			'/podcast/',
+			'fool.com',
+			'/videos/'
 		}
 		data = []
 		for entry in self.entries:
