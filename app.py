@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from email import parser
+from flask import Flask, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from parsers import CnnParser, NprParser
 
@@ -50,6 +51,20 @@ def article_view(article_id):
 	article = Article.query.filter_by(id=article_id).one()
 
 	return render_template('article_view.html', article=article)
+
+@app.route('/cnn')
+def cnn_landing_page():
+	articles = Article.query.filter_by(source='CNN').limit(10).all()
+
+	return render_template('cnn_landing_page.html', articles=articles)
+
+@app.route('/debug/<int:article_id>')
+def debug(article_id):
+	parser = CnnParser()
+
+	entry = parser.entries[article_id]
+	print(parser.getContent(entry))
+	return jsonify(entry)
 
 if __name__ == '__main__':
 	app.run(debug=True)

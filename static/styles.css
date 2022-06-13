@@ -11300,10 +11300,89 @@ textarea.form-control-lg {
   border: 1px;
 }
 
-#article-title {
-  margin-bottom: 30px;
-}
 #article-image {
   padding: 0;
   border: 5px solid black;
+  
+} 
+
+/* #article-authors {
+  
+}
+
+#article-summary {
+  
+
+#article-dates {
+  
+} */
+
+
+.grid-container {
+  display: grid;
+  grid-gap: 1%;
+  grid-template-columns: repeat(4, 25%);
+  grid-auto-rows: minmax(10px, auto);
+  grid-template-areas: 
+    "header header header header"
+    "source source source source"
+    "author author author author"
+    "image image summary summary"
+    "content content content content";
+}
+
+#article-title {
+  margin-bottom: 30px;
+  grid-area: header;
+  font-size: 200%;
+}
+
+#article-authors {
+  grid-area: author;
+}
+
+#article-image {
+  grid-area: image;
+  max-width: 100%;
+  border-radius: 8px;
+  height: auto;
+}
+
+#article-summary {
+  grid-area: summary;
+  text-align: left;
+}
+
+#article-content {
+  grid-area: content;
+}
+
+#article-dates {
+  grid-area: date;
+  margin-top: 50px;
+  text-align: center;
+}
+
+#article-source {
+  grid-area: source;
+}
+
+#bottom-break {
+  margin-top: 150px;
+}
+
+/* cnn-landing-page */
+.article-feed {
+  text-align: center;
+}
+
+.cnn-feed {
+  text-align: center;
+  width: 50%;
+}
+
+.feed-break {
+  width:50%;
+  margin: auto;
+  margin-bottom: 30px;
 }

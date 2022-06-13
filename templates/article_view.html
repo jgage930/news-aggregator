@@ -1,21 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-	<div id="article-viewer">
-		<a href="{{ article.orig_article_link }}"><h2 id="article-title">{{ article.title }}</h2></a>
+	<div id="article-viewer" class="grid-container">
+		<a class="grid-item" id="article-title" href="{{ article.orig_article_link }}">{{ article.title }}</a>
 		{% if article.author %}
-			<p id="article-authors">by {{ article.authors }}</p>
+			<p class="grid-item" id="article-authors">by {{ article.authors }}</p>
 		{% endif %}
-		<img src="{{ article.image_url }}" alt="" id="article-image">
-		<p id="article-source">source {{ article.source }}</p>
-		<hr class="article-break">
-		<p id="article-summary">{{ article.summary }}</p>
-		<hr class="article-break">
-		<p id="article-content">{{ article.content }}</p>
-		<hr class="article-break">
-		<p>published on {{ article.published_date }}, archived on {{ article.archive_date }}</p>
+		<img class="grid-item" src="{{ article.image_url }}" alt="" id="article-image">
+		<p class="grid-item" id="article-source">source {{ article.source }}</p>
 		
+		<p class="grid-item" id="article-summary">{{ article.summary }}</p>
 		
-
+		<p class="grid-item" id="article-content">{{ article.content }}</p>
 	</div>
+	<hr id="bottom-break">
+	<p id="article-dates">published on {{ article.published_date }}, archived on {{ article.archive_date }}</p>
 {% endblock %}

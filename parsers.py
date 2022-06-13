@@ -1,4 +1,3 @@
-import dataclasses
 import feedparser as fp
 import requests
 from bs4 import BeautifulSoup as bs
@@ -34,6 +33,12 @@ class CnnParser:
 		p_tags = soup.find_all('div', class_="zn-body__paragraph")
 		
 		content = [tag.text for tag in p_tags]
+
+		classes_ = [
+			'sc-bdVaJa post-content-rendered render-stellar-contentstyles__Content-sc-9v7nwy-0 daEDKg',
+			'pg-special-article__wrapper',
+
+		]
 		return '\n'.join(content)
 
 	def getPublishedDate(self, entry):
@@ -63,18 +68,19 @@ class CnnParser:
 	def parse(self):
 		data = []
 		for entry in self.entries:
-			dict = {
-				'title': self.getTitle(entry),
-				'summary': self.getSummary(entry),
-				'archive_date': self.getArchiveDate(),
-				'authors': self.getAuthors(entry),
-				'orig_article_link': self.getOrigArticleUrl(entry),
-				'content': self.getContent(entry),
-				'source': 'CNN',
-				'published_date': self.getPublishedDate(entry),
-				'image_url': self.getImageUrl(entry)
-			}
-			data.append(dict)
+			if 'podcast' not in entry['id']:
+				dict = {
+					'title': self.getTitle(entry),
+					'summary': self.getSummary(entry),
+					'archive_date': self.getArchiveDate(),
+					'authors': self.getAuthors(entry),
+					'orig_article_link': self.getOrigArticleUrl(entry),
+					'content': self.getContent(entry),
+					'source': 'CNN',
+					'published_date': self.getPublishedDate(entry),
+					'image_url': self.getImageUrl(entry)
+				}
+				data.append(dict)
 		return data
 
 class NprParser:

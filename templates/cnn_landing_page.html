@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div id="article feed">
+		{% for article in articles %}
+			<a href="{{ url_for('article_view', article_id=article.id) }}"><h3 class="cnn-feed">{{ article.title }}</h3></a>
+			<p class="cnn-feed">{{ article.summary }}</p>
+			<hr class="feed-break">
+		{% endfor %}
+	</div>
+{% endblock %}
