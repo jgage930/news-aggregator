@@ -50,7 +50,9 @@ def index():
 def article_view(article_id):	
 	article = Article.query.filter_by(id=article_id).one()
 
-	return render_template('article_view.html', article=article)
+	next_article_id = article_id + 1
+
+	return render_template('article_view.html', article=article, next_article_id=next_article_id)
 
 @app.route('/cnn')
 def cnn_landing_page():

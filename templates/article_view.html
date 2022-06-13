@@ -15,4 +15,7 @@
 	</div>
 	<hr id="bottom-break">
 	<p id="article-dates">published on {{ article.published_date }}, archived on {{ article.archive_date }}</p>
+	<div id="next-article-container">
+		<a href="{{ url_for('article_view', article_id=next_article_id) }}"> Next Article >></a>
+	</div>
 {% endblock %}
