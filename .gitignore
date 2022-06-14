@@ -3,3 +3,4 @@ __pycache__
 venv
 data.db
 test.py
+config.py

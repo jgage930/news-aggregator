@@ -1,11 +1,14 @@
-from email import parser
-from flask import Flask, jsonify, render_template
+
+from flask import Flask, flash, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
+from requests import request
 from parsers import CnnParser, NprParser
+from forms import SearchByDateForm
 
 # flask set up
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config.from_pyfile('config.py')
 
 # database
 db = SQLAlchemy(app)
@@ -67,6 +70,16 @@ def debug(article_id):
 	entry = parser.entries[article_id]
 	print(parser.getContent(entry))
 	return jsonify(entry)
+
+@app.route('/submit', methods=['GET', 'POST'])
+def submit():
+	form = SearchByDateForm()
+	if form.validate_on_submit():
+		start_date = form.start_date.data
+		end_date = form.end_date.data
+		
+		return flash(start_date)
+	return render_template('search.html', form=form)
 
 if __name__ == '__main__':
 	app.run(debug=True)
