@@ -7,9 +7,11 @@
 		<br>
 		{{ form.end_date.label }} {{ form.end_date(size=20) }}
 		<br>
-		<input type="submit" value="Go">
+		<input type="submit" value="submit">
 	</div>
 	<div>
-		{{ form.start_date.data }}
+		{{ start }}
+		{{ end }}
+		{{ data }}
 	</div>
 {% endblock %}

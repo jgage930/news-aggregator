@@ -77,8 +77,11 @@ def submit():
 	if form.validate_on_submit():
 		start_date = form.start_date.data
 		end_date = form.end_date.data
+
+	# test to see if we can filter date so it only shows results that match the first date
+	data = Article.query.all()
+	print(data)
 		
-		return flash(start_date)
 	return render_template('search.html', form=form)
 
 if __name__ == '__main__':
