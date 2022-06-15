@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-	<div class="form" id="search-by-date">
+	<form class="form" method="POST" id="search-by-date">
 		{{ form.csrf_token }}
 		{{ form.start_date.label }} {{ form.start_date(size=20) }}
 		<br>
 		{{ form.end_date.label }} {{ form.end_date(size=20) }}
 		<br>
+		{{ form.keywords.label }} {{ form.keywords(size=20) }}
 		<input type="submit" value="submit">
-	</div>
+	</form>
 	<div>
 		<hr>
 		{% for article in data %}
@@ -22,5 +23,12 @@
 			<a href="{{ article.orig_article_link }}">View From Source>></a>
 			<hr>
 		{% endfor %}
+	</div>
+	<div>
+		{{ start_date }}
+		<br>
+		{{ end_date }}
+		<br>
+		{{ keywords }}
 	</div>
 {% endblock %}

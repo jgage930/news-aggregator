@@ -1,9 +1,11 @@
 
+from ast import keyword
 from flask import Flask, flash, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from requests import request
 from parsers import CnnParser, NprParser
-from forms import SearchByDateForm
+from forms import SearchForm
+import re
 
 # flask set up
 app = Flask(__name__)
@@ -73,17 +75,51 @@ def debug(article_id):
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
-	form = SearchByDateForm()
-	if form.validate_on_submit():
-		start_date = form.start_date.data
-		end_date = form.end_date.data
-		data = Article.query.filter(Article.archive_date >= start_date).filter(Article.archive_date <= end_date).all()
+	# form = SearchByDateForm()
+	# if form.validate_on_submit():
+	# 	start_date = form.start_date.data
+	# 	end_date = form.end_date.data
+	# 	data = Article.query.filter(Article.archive_date >= start_date).filter(Article.archive_date <= end_date).all()
 
-	# test to see if we can filter date so it only shows results that match the first date
-	data = Article.query.all()
-	print(data)
+	# # test to see if we can filter date so it only shows results that match the first date
+	# data = Article.query.all()
+	# print(data)
 		
-	return render_template('search.html', form=form, data=data)
+	# return render_template('search.html', form=form, data=data)
+
+	# TODO refactor to only use one form  need to add some js to hide elements
+	start_date = None
+	end_date = None
+	keywords = None
+	data = []
+
+	form = SearchForm()
+	if form.validate_on_submit():
+		if form.start_date.data and form.end_date.data:
+			start_date = form.start_date.data
+			end_date = form.end_date.data
+			data = Article.query.filter(Article.archive_date >= start_date).filter(Article.archive_date <= end_date).all()
+
+		if form.keywords.data:
+			keywords = form.keywords.data
+			keywords = keywords.split(' ')
+			#keywords_regex = re.compile('|'.join(keyword))
+
+			for keyword in keywords:
+				keyword_data = Article.query.filter(Article.content.like('%' + keyword + '%')).all()
+				print(keyword_data)
+				data.extend(keyword_data)
+
+	return render_template(
+		'search.html',
+		form=form,
+		start_date=start_date,
+		end_date=end_date,
+		keywords=keywords,
+		data=data
+	)
+	
+		 
 
 if __name__ == '__main__':
 	app.run(debug=True)
