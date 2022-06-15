@@ -71,18 +71,19 @@ def debug(article_id):
 	print(parser.getContent(entry))
 	return jsonify(entry)
 
-@app.route('/submit', methods=['GET', 'POST'])
-def submit():
+@app.route('/search', methods=['GET', 'POST'])
+def search():
 	form = SearchByDateForm()
 	if form.validate_on_submit():
 		start_date = form.start_date.data
 		end_date = form.end_date.data
+		data = Article.query.filter(Article.archive_date >= start_date).filter(Article.archive_date <= end_date).all()
 
 	# test to see if we can filter date so it only shows results that match the first date
 	data = Article.query.all()
 	print(data)
 		
-	return render_template('search.html', form=form)
+	return render_template('search.html', form=form, data=data)
 
 if __name__ == '__main__':
 	app.run(debug=True)
