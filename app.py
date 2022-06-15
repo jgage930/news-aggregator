@@ -103,7 +103,6 @@ def search():
 		if form.keywords.data:
 			keywords = form.keywords.data
 			keywords = keywords.split(' ')
-			#keywords_regex = re.compile('|'.join(keyword))
 
 			for keyword in keywords:
 				keyword_data = Article.query.filter(Article.content.like('%' + keyword + '%')).all()
